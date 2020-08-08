@@ -19,7 +19,7 @@ int main(int argc, char const *argv[]) {
 	servaddr.sin_port = htons(13);
 
 	// 创建一个网际字节流套接字
-	if (sockfd = socket(AF_INET, SOCK_STREAM, 0) < 0) {
+	if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
 		printf("socket error\n");
 		return 1;
 	}
@@ -40,6 +40,8 @@ int main(int argc, char const *argv[]) {
 		recvline[n] = 0;
 		fputs(recvline, stdout);
 	}
+
+	close(sockfd);
 
 	return 0;
 }
