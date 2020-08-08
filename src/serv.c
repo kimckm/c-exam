@@ -46,8 +46,10 @@ int main(int argc, char const *argv[]) {
 	printf("port %d\n", ntohs(cliaddr.sin_port));
 
 	time_t ticks = time(NULL);
-	snprintf(buff, sizeof(buff), "%.24s\r\n", ctime(&ticks));
-	write(connfd, buff, strlen(buff));
+
+	char timebuff[256];
+	snprintf(timebuff, sizeof(timebuff), "%.24s\r\n", ctime(&ticks));
+	write(connfd, timebuff, strlen(timebuff));
 
 	close(sockfd);
 	return 0;
