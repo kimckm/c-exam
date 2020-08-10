@@ -24,7 +24,7 @@ int main(int argc, char const *argv[]) {
 		return 1;
 	}
 
-    const char * addr = "127.0.0.1";
+    const char * addr = "10.0.126.17";
 
     // 若成功则返回值为1
 	if (inet_pton(AF_INET, addr, &servaddr.sin_addr) <= 0) {

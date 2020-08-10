@@ -14,7 +14,11 @@
 #include <string.h>
 
 int main(int argc, char const *argv[]) {
-	int sockfd;
+	int sockfd, connfd;
+	struct sockaddr_in servaddr, cliaddr;
+	socklen_t len;
+	char buff[1024];
+	time_t ticks;
 
 	/*
 	  AF_INET IPv4协议
@@ -22,8 +26,6 @@ int main(int argc, char const *argv[]) {
 	  IPPROTO_TCP TCP传输协议
 	*/
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
-
-	struct sockaddr_in servaddr;
 
 	servaddr.sin_family = AF_INET;
 	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -35,21 +37,22 @@ int main(int argc, char const *argv[]) {
 	// 把主动套接字转换为被动套接字，并指明内核应该为相应套接字排队的最大连接个数。
 	listen(sockfd, 10);
 
-	struct sockaddr_in cliaddr;
-	socklen_t len = sizeof(cliaddr);
-	int connfd = accept(sockfd, (struct sockaddr *) &cliaddr, &len);
+	len = sizeof(cliaddr);
+	for ( ; ; ) {
+		connfd = accept(sockfd, (struct sockaddr *) &cliaddr, &len);
 
-	char buff[16];
-	inet_ntop(AF_INET, &cliaddr.sin_addr, buff, sizeof(buff));
+		inet_ntop(AF_INET, &cliaddr.sin_addr, buff, sizeof(buff));
 
-	printf("connection from %s\n", buff);
-	printf("port %d\n", ntohs(cliaddr.sin_port));
+		printf("connection from %s\n", buff);
+		printf("port %d\n", ntohs(cliaddr.sin_port));
 
-	time_t ticks = time(NULL);
+		ticks = time(NULL);
 
-	char timebuff[256];
-	snprintf(timebuff, sizeof(timebuff), "%.24s\r\n", ctime(&ticks));
-	write(connfd, timebuff, strlen(timebuff));
+		snprintf(buff, sizeof(buff), "%.24s\r\n", ctime(&ticks));
+		write(connfd, buff, strlen(buff));
+
+		close(connfd);
+	}
 
 	close(sockfd);
 	return 0;
