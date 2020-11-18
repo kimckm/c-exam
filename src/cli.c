@@ -16,7 +16,7 @@ int main(int argc, char const *argv[]) {
 	bzero(&servaddr, sizeof(servaddr));
 
 	servaddr.sin_family = AF_INET;
-	servaddr.sin_port = htons(13);
+	servaddr.sin_port = htons(12276);
 
 	// 创建一个网际字节流套接字
 	if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
