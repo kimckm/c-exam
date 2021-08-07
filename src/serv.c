@@ -10,26 +10,22 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include <stdio.h>
-#include <time.h>
 #include <string.h>
 
 int main(int argc, char const *argv[]) {
 	int sockfd, connfd;
 	struct sockaddr_in servaddr, cliaddr;
+
 	socklen_t len;
 	char buff[1024];
-	time_t ticks;
 
-	/*
-	  AF_INET IPv4协议
-	  SOCK_STREAM 字节流套接字
-	  IPPROTO_TCP TCP传输协议
-	*/
+	// AF_INET IPv4协议
+	// SOCK_STREAM 字节流套接字
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
 	servaddr.sin_family = AF_INET;
 	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-	servaddr.sin_port = htons(13);
+	servaddr.sin_port = htons(61227);
 
 	// bind函数把一个本地协议地址赋予一个套接字。
 	bind(sockfd, (struct sockaddr *) &servaddr, sizeof(servaddr));
@@ -40,16 +36,8 @@ int main(int argc, char const *argv[]) {
 	len = sizeof(cliaddr);
 	for ( ; ; ) {
 		connfd = accept(sockfd, (struct sockaddr *) &cliaddr, &len);
-
 		inet_ntop(AF_INET, &cliaddr.sin_addr, buff, sizeof(buff));
-
-		printf("connection from %s\n", buff);
-		printf("port %d\n", ntohs(cliaddr.sin_port));
-
-		ticks = time(NULL);
-
-		snprintf(buff, sizeof(buff), "%.24s\r\n", ctime(&ticks));
-		write(connfd, buff, strlen(buff));
+		printf("%s:%d\n", buff, ntohs(cliaddr.sin_port));
 
 		close(connfd);
 	}
