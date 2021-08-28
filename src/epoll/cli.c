@@ -1,6 +1,3 @@
-/*
- * 获取TCP服务器当前时间。
- */
 #include <stdio.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -24,9 +21,8 @@ int main(int argc, char const *argv[]) {
 		return 1;
 	}
 
-    const char * addr = "120.27.193.111";
+	const char * addr = "120.27.193.111";
 
-    // 若成功则返回值为1
 	if (inet_pton(AF_INET, addr, &servaddr.sin_addr) <= 0) {
 		printf("地址格式有误 [%s]\n", addr);
 		return 1;
@@ -36,10 +32,8 @@ int main(int argc, char const *argv[]) {
 		printf("connect error\n");
 	}
 
-	while ((n = read(sockfd, recvline, 4096)) > 0) {
-		recvline[n] = 0;
-		fputs(recvline, stdout);
-	}
+	const char * str = "hello";
+	write(sockfd, str, strlen(str));
 
 	close(sockfd);
 
