@@ -1,0 +1,2 @@
+main:
+	$(CC) serv.c 

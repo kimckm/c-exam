@@ -23,10 +23,10 @@
 
 #define CACHE_SIGNATURE 0x44495243	/* "DIRC" */
 struct cache_header {
-	unsigned int signature;
-	unsigned int version;
-	unsigned int entries;
-	unsigned char sha1[20];
+        unsigned int signature;
+        unsigned int version;
+        unsigned int entries;
+        unsigned char sha1[20];
 };
 
 /*
@@ -35,8 +35,8 @@ struct cache_header {
  * check it for equality in the 32 bits we save.
  */
 struct cache_time {
-	unsigned int sec;
-	unsigned int nsec;
+        unsigned int sec;
+        unsigned int nsec;
 };
 
 /*
@@ -45,17 +45,17 @@ struct cache_time {
  * the inode hasn't changed.
  */
 struct cache_entry {
-	struct cache_time ctime;
-	struct cache_time mtime;
-	unsigned int st_dev;
-	unsigned int st_ino;
-	unsigned int st_mode;
-	unsigned int st_uid;
-	unsigned int st_gid;
-	unsigned int st_size;
-	unsigned char sha1[20];
-	unsigned short namelen;
-	unsigned char name[0];
+        struct cache_time ctime;
+        struct cache_time mtime;
+        unsigned int st_dev;
+        unsigned int st_ino;
+        unsigned int st_mode;
+        unsigned int st_uid;
+        unsigned int st_gid;
+        unsigned int st_size;
+        unsigned char sha1[20];
+        unsigned short namelen;
+        unsigned char name[0];
 };
 
 const char *sha1_file_directory;

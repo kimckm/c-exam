@@ -1,0 +1,2 @@
+main:
+	$(CC) res.c 
