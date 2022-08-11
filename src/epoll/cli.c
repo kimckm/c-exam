@@ -21,7 +21,7 @@ int main(int argc, char const *argv[]) {
 		return 1;
 	}
 
-	const char * addr = "120.27.193.111";
+	const char * addr = "127.0.0.1";
 
 	if (inet_pton(AF_INET, addr, &servaddr.sin_addr) <= 0) {
 		printf("地址格式有误 [%s]\n", addr);
@@ -34,8 +34,12 @@ int main(int argc, char const *argv[]) {
 
 	const char * str = "hello";
 	write(sockfd, str, strlen(str));
+	sleep(5);
+
+	const char * str2 = "abc";
+	write(sockfd, str2, strlen(str2));
+	sleep(5);
 
 	close(sockfd);
-
 	return 0;
 }
